@@ -546,23 +546,20 @@ document.getElementById("mainForm").addEventListener("submit", async (e) => {
   const timeoutId = setTimeout(() => controller.abort(), 10000);
 
   try {
-    const res = await fetch(GAS_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain" },
-      body: JSON.stringify(payload),
-      signal: controller.signal,
-    });
-    clearTimeout(timeoutId);
+    await fetch(GAS_ENDPOINT, {
+  method: "POST",
+  mode: "no-cors",
+  headers: { "Content-Type": "text/plain" },
+  body: JSON.stringify(payload),
+  signal: controller.signal,
+});
+clearTimeout(timeoutId);
 
-    const result = await res.json();
-    if (result.status === "ok") {
-      document.getElementById("mainForm").style.display = "none";
-      statusBar.className = "status-bar";
-      document.getElementById("doneScreen").style.display = "block";
-      document.querySelector(".notice").style.display = "none";
-    } else {
-      throw new Error(result.message || "サーバーエラー");
-    }
+// no-corsはレスポンスを読めないので送信完了とみなす
+document.getElementById("mainForm").style.display = "none";
+statusBar.className = "status-bar";
+document.getElementById("doneScreen").style.display = "block";
+document.querySelector(".notice").style.display = "none";
   } catch (err) {
     clearTimeout(timeoutId);
     btn.disabled = false;
