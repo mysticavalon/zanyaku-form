@@ -548,7 +548,7 @@ document.getElementById("mainForm").addEventListener("submit", async (e) => {
   try {
     const res = await fetch(GAS_ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "text/plain" },
       body: JSON.stringify(payload),
       signal: controller.signal,
     });
