@@ -327,7 +327,7 @@
       </div>
       <div class="card-body">
         <div class="field">
-          <label for="drugName">お薬の名前<span class="hint">（わからなければ「袋のまま」でも可）</span></label>
+          <label for="drugName">お薬の名前<span class="hint">（わかる範囲で構いません）</span></label>
           <input type="text" id="drugName" name="drugName"
             placeholder="例：テリルジー、目薬、塗り薬など"
             maxlength="200" autocomplete="off">
@@ -362,6 +362,15 @@
           <div class="choice-item purp" style="grid-column: 1/-1;">
             <input type="radio" name="amount" id="a5" value="その他（外用など）">
             <label for="a5">その他（外用薬・目薬など）</label>
+          </div>
+        </div>
+        <!-- その他選択時のコメント欄 -->
+        <div class="conditional" id="otherAmountBlock" style="margin-top:10px;">
+          <div class="field">
+            <label for="otherAmount">残量を教えてください<span class="hint">（例：吸入薬1個、目薬2本など）</span></label>
+            <input type="text" id="otherAmount" name="otherAmount"
+              placeholder="例：吸入薬1個、目薬2本など"
+              maxlength="200" autocomplete="off">
           </div>
         </div>
       </div>
@@ -434,7 +443,7 @@
 // ================================================================
 // 設定：デプロイ後にGASのエンドポイントURLとトークンを設定
 // ================================================================
-const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwrNrkueQp7gBUrEL7DyI29SvBAUUvJOXtsZmZKH0G83oxOZWPEVfhTZ5JNoN1GCQ/exec"; // ← GASデプロイ後に書き換え
+const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyQTbQgioHIlPnTUVIv9yxk2oQnx3heVEXHVj07Fm1UjYj1BeM1VXpfQFEia61Bu9c/exec"; // ← GASデプロイ後に書き換え
 const API_TOKEN    = "04cc60d675b4d487eb1fa375f50a6d29d78cd0ccdbb4bd86546ed06b707efe2b";       // ← GASと同じトークンを設定
 
 // ================================================================
@@ -444,6 +453,20 @@ document.querySelectorAll('input[name="hasRemainder"]').forEach(radio => {
   radio.addEventListener("change", () => {
     const block = document.getElementById("detailBlock");
     if (radio.value === "あり" && radio.checked) {
+      block.classList.add("visible");
+    } else {
+      block.classList.remove("visible");
+    }
+  });
+});
+
+// ================================================================
+// 条件表示（「その他」選択時にコメント欄を展開）
+// ================================================================
+document.querySelectorAll('input[name="amount"]').forEach(radio => {
+  radio.addEventListener("change", () => {
+    const block = document.getElementById("otherAmountBlock");
+    if (radio.value === "その他（外用など）" && radio.checked) {
       block.classList.add("visible");
     } else {
       block.classList.remove("visible");
@@ -535,6 +558,7 @@ document.getElementById("mainForm").addEventListener("submit", async (e) => {
     hasRemainder: sanitize(document.querySelector('input[name="hasRemainder"]:checked')?.value || ""),
     drugName:    sanitize(document.getElementById("drugName").value),
     amount:      sanitize(document.querySelector('input[name="amount"]:checked')?.value || ""),
+      otherAmount: sanitize(document.getElementById("otherAmount").value),
     reason:      reasons,
     comment:     sanitize(document.getElementById("comment").value),
     submittedAt: new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" }),
@@ -546,20 +570,23 @@ document.getElementById("mainForm").addEventListener("submit", async (e) => {
   const timeoutId = setTimeout(() => controller.abort(), 10000);
 
   try {
-    await fetch(GAS_ENDPOINT, {
-  method: "POST",
-  mode: "no-cors",
-  headers: { "Content-Type": "text/plain" },
-  body: JSON.stringify(payload),
-  signal: controller.signal,
-});
-clearTimeout(timeoutId);
+    const res = await fetch(GAS_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
 
-// no-corsはレスポンスを読めないので送信完了とみなす
-document.getElementById("mainForm").style.display = "none";
-statusBar.className = "status-bar";
-document.getElementById("doneScreen").style.display = "block";
-document.querySelector(".notice").style.display = "none";
+    const result = await res.json();
+    if (result.status === "ok") {
+      document.getElementById("mainForm").style.display = "none";
+      statusBar.className = "status-bar";
+      document.getElementById("doneScreen").style.display = "block";
+      document.querySelector(".notice").style.display = "none";
+    } else {
+      throw new Error(result.message || "サーバーエラー");
+    }
   } catch (err) {
     clearTimeout(timeoutId);
     btn.disabled = false;
