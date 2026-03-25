@@ -257,14 +257,14 @@ function addDrug() {
   var block = document.getElementById("drug-block-" + drugCount);
   block.style.display = "block";
   initDrugBlock(drugCount);
-  if (drugCount >= 3) document.getElementById("addDrugBtn").disabled = true;
+  if (drugCount >= 3) document.getElementById("addDrugBtn").style.display = "none";
 }
 
 function removeDrug(idx) {
   document.getElementById("drug-block-" + idx).style.display = "none";
   document.getElementById("drug-body-" + idx).innerHTML = "";
   if (idx === drugCount) drugCount--;
-  document.getElementById("addDrugBtn").disabled = false;
+  document.getElementById("addDrugBtn").style.display = "block";
 }
 
 initDrugBlock(1);
