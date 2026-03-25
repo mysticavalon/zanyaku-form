@@ -6,202 +6,79 @@
 <meta name="robots" content="noindex, nofollow">
 <title>お薬の残り確認 | 日本調剤 綱島西薬局</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy:   #1a3557;
-    --teal:   #1d9e75;
-    --teal-l: #e1f5ee;
-    --amber:  #ba7517;
-    --amb-l:  #faeeda;
-    --red-l:  #fcebeb;
-    --purp-l: #eeedfe;
-    --gray:   #f4f4f2;
-    --gray-m: #d3d1c7;
-    --text:   #2c2c2a;
-    --sub:    #6b6b67;
-    --white:  #ffffff;
-    --radius: 12px;
-    --shadow: 0 4px 24px rgba(26,53,87,.10);
+    --navy:#1a3557;--teal:#1d9e75;--teal-l:#e1f5ee;
+    --amber:#ba7517;--amb-l:#faeeda;--red-l:#fcebeb;
+    --purp-l:#eeedfe;--gray:#f4f4f2;--gray-m:#d3d1c7;
+    --text:#2c2c2a;--sub:#6b6b67;--white:#ffffff;
+    --radius:12px;--shadow:0 4px 24px rgba(26,53,87,.10);
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Noto Sans JP', sans-serif;
-    background: linear-gradient(135deg, #f0f7f4 0%, #e8f1f8 100%);
-    min-height: 100vh;
-    color: var(--text);
-    padding: 20px 16px 60px;
-  }
-  .header {
-    max-width: 480px;
-    margin: 0 auto 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .header-logo {
-    width: 44px; height: 44px;
-    background: var(--navy);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .header-logo svg { width: 24px; height: 24px; fill: white; }
-  .header-text h1 { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.3; }
-  .header-text p { font-size: 11px; color: var(--sub); margin-top: 2px; }
-  .card {
-    max-width: 480px;
-    margin: 0 auto 16px;
-    background: var(--white);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-  }
-  .card-head {
-    background: var(--navy);
-    padding: 16px 20px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .card-head .step {
-    width: 28px; height: 28px;
-    background: rgba(255,255,255,.18);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 700; color: white; flex-shrink: 0;
-  }
-  .card-head h2 { font-size: 14px; font-weight: 700; color: white; }
-  .card-body { padding: 20px; }
-  .field { margin-bottom: 16px; }
-  .field:last-child { margin-bottom: 0; }
-  label {
-    display: block;
-    font-size: 12px; font-weight: 700;
-    color: var(--navy); margin-bottom: 6px;
-  }
-  label .req { color: var(--amber); font-size: 11px; margin-left: 4px; }
-  label .hint { color: var(--sub); font-size: 11px; font-weight: 400; margin-left: 6px; }
-  input[type="text"],
-  input[type="number"],
-  textarea,
-  select {
-    width: 100%;
-    padding: 11px 14px;
-    border: 1.5px solid var(--gray-m);
-    border-radius: 8px;
-    font-size: 15px;
-    font-family: 'Noto Sans JP', sans-serif;
-    color: var(--text);
-    background: var(--white);
-    transition: border-color .2s, box-shadow .2s;
-    -webkit-appearance: none;
-    appearance: none;
-  }
-  input:focus, textarea:focus, select:focus {
-    outline: none;
-    border-color: var(--teal);
-    box-shadow: 0 0 0 3px rgba(29,158,117,.12);
-  }
-  input.error { border-color: #d94040; }
-  .choice-group { display: flex; flex-direction: column; gap: 8px; }
-  .choice-group.two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-  .choice-item { position: relative; }
-  .choice-item input[type="radio"],
-  .choice-item input[type="checkbox"] {
-    position: absolute; opacity: 0; width: 0; height: 0;
-  }
-  .choice-item label {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 14px;
-    border: 1.5px solid var(--gray-m);
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 13px; font-weight: 400;
-    color: var(--text);
-    margin: 0;
-    transition: border-color .2s, background .2s;
-    line-height: 1.4;
-  }
-  .choice-item label::before {
-    content: "";
-    width: 18px; height: 18px; flex-shrink: 0;
-    border: 2px solid var(--gray-m);
-    border-radius: 50%;
-    transition: border-color .2s, background .2s;
-  }
-  .choice-item.check label::before { border-radius: 4px; }
-  .choice-item input:checked + label { border-color: var(--teal); background: var(--teal-l); font-weight: 500; }
-  .choice-item input:checked + label::before { border-color: var(--teal); background: var(--teal); }
-  .choice-item.amber input:checked + label { border-color: var(--amber); background: var(--amb-l); }
-  .choice-item.amber input:checked + label::before { border-color: var(--amber); background: var(--amber); }
-  .choice-item.danger input:checked + label { border-color: #d94040; background: var(--red-l); }
-  .choice-item.danger input:checked + label::before { border-color: #d94040; background: #d94040; }
-  .choice-item.purp input:checked + label { border-color: #534ab7; background: var(--purp-l); }
-  .choice-item.purp input:checked + label::before { border-color: #534ab7; background: #534ab7; }
-  .conditional {
-    max-height: 0; overflow: hidden;
-    transition: max-height .4s ease, opacity .3s ease;
-    opacity: 0;
-  }
-  .conditional.visible { max-height: 2000px; opacity: 1; }
-  .btn-submit {
-    display: block; width: 100%; max-width: 480px;
-    margin: 24px auto 0;
-    padding: 16px;
-    background: var(--teal);
-    color: white;
-    border: none; border-radius: 12px;
-    font-size: 16px; font-weight: 700;
-    font-family: 'Noto Sans JP', sans-serif;
-    cursor: pointer;
-    transition: background .2s, transform .1s, box-shadow .2s;
-    box-shadow: 0 4px 16px rgba(29,158,117,.3);
-    letter-spacing: .04em;
-  }
-  .btn-submit:hover { background: #178a64; }
-  .btn-submit:active { transform: scale(.98); }
-  .btn-submit:disabled { background: var(--gray-m); cursor: not-allowed; box-shadow: none; }
-  .status-bar {
-    max-width: 480px; margin: 12px auto 0;
-    padding: 12px 16px;
-    border-radius: 8px; font-size: 13px;
-    display: none;
-  }
-  .status-bar.error   { background: var(--red-l); color: #9b2020; display: block; }
-  .status-bar.loading { background: var(--gray); color: var(--sub); display: block; }
-  .done-screen {
-    display: none;
-    max-width: 480px; margin: 40px auto;
-    text-align: center;
-  }
-  .done-screen .icon {
-    width: 72px; height: 72px;
-    background: var(--teal-l);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 20px;
-  }
-  .done-screen .icon svg { width: 36px; height: 36px; stroke: var(--teal); fill: none; }
-  .done-screen h2 { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
-  .done-screen p  { font-size: 13px; color: var(--sub); line-height: 1.8; }
-  .notice {
-    max-width: 480px; margin: 16px auto 0;
-    font-size: 11px; color: var(--sub);
-    line-height: 1.8; text-align: center;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .spinner {
-    display: inline-block;
-    width: 16px; height: 16px;
-    border: 2px solid rgba(255,255,255,.4);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin .7s linear infinite;
-    vertical-align: middle; margin-right: 8px;
-  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Noto Sans JP',sans-serif;background:linear-gradient(135deg,#f0f7f4 0%,#e8f1f8 100%);min-height:100vh;color:var(--text);padding:20px 16px 60px;}
+  .header{max-width:480px;margin:0 auto 24px;display:flex;align-items:center;gap:12px;}
+  .header-logo{width:44px;height:44px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .header-logo svg{width:24px;height:24px;fill:white;}
+  .header-text h1{font-size:13px;font-weight:700;color:var(--navy);line-height:1.3;}
+  .header-text p{font-size:11px;color:var(--sub);margin-top:2px;}
+  .card{max-width:480px;margin:0 auto 16px;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+  .card-head{background:var(--navy);padding:14px 20px;display:flex;align-items:center;gap:10px;}
+  .card-head .step{width:26px;height:26px;background:rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;}
+  .card-head h2{font-size:13px;font-weight:700;color:white;}
+  .card-body{padding:18px 20px;}
+  .drug-block{max-width:480px;margin:0 auto 12px;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+  .drug-block-head{background:#185fa5;padding:12px 20px;display:flex;align-items:center;gap:10px;}
+  .drug-block-head h3{font-size:13px;font-weight:700;color:white;flex:1;}
+  .btn-remove{background:rgba(255,255,255,.2);border:none;color:white;font-size:12px;padding:3px 10px;border-radius:4px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+  .drug-block-body{padding:16px 20px;}
+  .drug-section{margin-bottom:14px;}
+  .drug-section:last-child{margin-bottom:0;}
+  .field{margin-bottom:14px;}
+  .field:last-child{margin-bottom:0;}
+  label{display:block;font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+  label .req{color:var(--amber);font-size:11px;margin-left:4px;}
+  label .hint{color:var(--sub);font-size:11px;font-weight:400;margin-left:6px;}
+  input[type="text"],input[type="number"]{width:100%;padding:11px 14px;border:1.5px solid var(--gray-m);border-radius:8px;font-size:15px;font-family:'Noto Sans JP',sans-serif;color:var(--text);background:var(--white);transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;appearance:none;}
+  input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(29,158,117,.12);}
+  input.error{border-color:#d94040;}
+  .choice-group{display:flex;flex-direction:column;gap:8px;}
+  .choice-group.two-col{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .choice-item{position:relative;}
+  .choice-item input[type="radio"],.choice-item input[type="checkbox"]{position:absolute;opacity:0;width:0;height:0;}
+  .choice-item label{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--gray-m);border-radius:8px;cursor:pointer;font-size:13px;font-weight:400;color:var(--text);margin:0;transition:border-color .2s,background .2s;line-height:1.4;}
+  .choice-item label::before{content:"";width:18px;height:18px;flex-shrink:0;border:2px solid var(--gray-m);border-radius:50%;transition:border-color .2s,background .2s;}
+  .choice-item.check label::before{border-radius:4px;}
+  .choice-item input:checked+label{border-color:var(--teal);background:var(--teal-l);font-weight:500;}
+  .choice-item input:checked+label::before{border-color:var(--teal);background:var(--teal);}
+  .choice-item.amber input:checked+label{border-color:var(--amber);background:var(--amb-l);}
+  .choice-item.amber input:checked+label::before{border-color:var(--amber);background:var(--amber);}
+  .choice-item.danger input:checked+label{border-color:#d94040;background:var(--red-l);}
+  .choice-item.danger input:checked+label::before{border-color:#d94040;background:#d94040;}
+  .choice-item.purp input:checked+label{border-color:#534ab7;background:var(--purp-l);}
+  .choice-item.purp input:checked+label::before{border-color:#534ab7;background:#534ab7;}
+  .conditional{max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s ease;opacity:0;}
+  .conditional.visible{max-height:1000px;opacity:1;}
+  .adjust-block{background:var(--teal-l);border:1.5px solid var(--teal);border-radius:8px;padding:12px 14px;margin-top:10px;}
+  .adjust-label{font-size:12px;font-weight:700;color:#085041;margin-bottom:8px;}
+  .btn-add{display:block;width:100%;max-width:480px;margin:0 auto 16px;padding:13px;background:var(--white);color:#185fa5;border:2px dashed #185fa5;border-radius:12px;font-size:14px;font-weight:700;font-family:'Noto Sans JP',sans-serif;cursor:pointer;transition:background .2s;text-align:center;}
+  .btn-add:hover{background:#e6f1fb;}
+  .btn-add:disabled{opacity:.4;cursor:not-allowed;}
+  .btn-submit{display:block;width:100%;max-width:480px;margin:8px auto 0;padding:16px;background:var(--teal);color:white;border:none;border-radius:12px;font-size:16px;font-weight:700;font-family:'Noto Sans JP',sans-serif;cursor:pointer;transition:background .2s,transform .1s,box-shadow .2s;box-shadow:0 4px 16px rgba(29,158,117,.3);}
+  .btn-submit:hover{background:#178a64;}
+  .btn-submit:active{transform:scale(.98);}
+  .btn-submit:disabled{background:var(--gray-m);cursor:not-allowed;box-shadow:none;}
+  .status-bar{max-width:480px;margin:12px auto 0;padding:12px 16px;border-radius:8px;font-size:13px;display:none;}
+  .status-bar.error{background:var(--red-l);color:#9b2020;display:block;}
+  .status-bar.loading{background:var(--gray);color:var(--sub);display:block;}
+  .done-screen{display:none;max-width:480px;margin:40px auto;text-align:center;}
+  .done-screen .icon{width:72px;height:72px;background:var(--teal-l);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+  .done-screen .icon svg{width:36px;height:36px;stroke:var(--teal);fill:none;}
+  .done-screen h2{font-size:20px;font-weight:700;color:var(--navy);margin-bottom:8px;}
+  .done-screen p{font-size:13px;color:var(--sub);line-height:1.8;}
+  .notice{max-width:480px;margin:16px auto 0;font-size:11px;color:var(--sub);line-height:1.8;text-align:center;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px;}
 </style>
 </head>
 <body>
@@ -219,25 +96,17 @@
 <form id="mainForm" novalidate>
 
   <div class="card">
-    <div class="card-head">
-      <div class="step">1</div>
-      <h2>引換券番号を入力してください</h2>
-    </div>
+    <div class="card-head"><div class="step">1</div><h2>引換券番号を入力してください</h2></div>
     <div class="card-body">
       <div class="field">
         <label for="ticketNo">引換券番号<span class="req">必須</span><span class="hint">（受付でお渡しした番号）</span></label>
-        <input type="number" id="ticketNo" name="ticketNo"
-          placeholder="例：42" min="1" max="9999"
-          inputmode="numeric" autocomplete="off" required>
+        <input type="number" id="ticketNo" name="ticketNo" placeholder="例：42" min="1" max="9999" inputmode="numeric" autocomplete="off" required>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-head">
-      <div class="step">2</div>
-      <h2>余っているお薬はありますか？</h2>
-    </div>
+    <div class="card-head"><div class="step">2</div><h2>余っているお薬はありますか？</h2></div>
     <div class="card-body">
       <div class="choice-group">
         <div class="choice-item">
@@ -252,102 +121,29 @@
     </div>
   </div>
 
-  <div class="conditional" id="detailBlock">
-
-    <div class="card" style="margin-bottom:16px;">
-      <div class="card-head">
-        <div class="step">3</div>
-        <h2>どのお薬が余っていますか？</h2>
-      </div>
-      <div class="card-body">
-        <div class="field">
-          <label for="drugName">お薬の名前<span class="hint">（わかる範囲で構いません）</span></label>
-          <input type="text" id="drugName" name="drugName"
-            placeholder="例：テリルジー、目薬、塗り薬など"
-            maxlength="200" autocomplete="off">
-        </div>
-      </div>
+  <div class="conditional" id="drugsWrapper">
+    <div class="drug-block" id="drug-block-1">
+      <div class="drug-block-head"><h3>薬剤①</h3></div>
+      <div class="drug-block-body" id="drug-body-1"></div>
     </div>
-
-    <div class="card" style="margin-bottom:16px;">
-      <div class="card-head">
-        <div class="step">4</div>
-        <h2>どのくらい余っていますか？</h2>
+    <div class="drug-block" id="drug-block-2" style="display:none;">
+      <div class="drug-block-head">
+        <h3>薬剤②</h3>
+        <button type="button" class="btn-remove" onclick="removeDrug(2)">削除</button>
       </div>
-      <div class="card-body">
-        <div class="choice-group two-col" id="amountGroup">
-          <div class="choice-item">
-            <input type="radio" name="amount" id="a1" value="1〜6日分">
-            <label for="a1">1〜6日分</label>
-          </div>
-          <div class="choice-item amber">
-            <input type="radio" name="amount" id="a2" value="7〜13日分">
-            <label for="a2">7〜13日分</label>
-          </div>
-          <div class="choice-item danger">
-            <input type="radio" name="amount" id="a3" value="14〜27日分">
-            <label for="a3">14〜27日分</label>
-          </div>
-          <div class="choice-item danger">
-            <input type="radio" name="amount" id="a4" value="28日分以上">
-            <label for="a4">28日分以上</label>
-          </div>
-          <div class="choice-item purp" style="grid-column: 1/-1;">
-            <input type="radio" name="amount" id="a5" value="その他（外用など）">
-            <label for="a5">その他（外用薬・目薬など）</label>
-          </div>
-        </div>
-        <div class="conditional" id="otherAmountBlock" style="margin-top:10px;">
-          <div class="field">
-            <label for="otherAmount">残量を教えてください<span class="hint">（例：吸入薬1個、目薬2本など）</span></label>
-            <input type="text" id="otherAmount" name="otherAmount"
-              placeholder="例：吸入薬1個、目薬2本など"
-              maxlength="200" autocomplete="off">
-          </div>
-        </div>
-      </div>
+      <div class="drug-block-body" id="drug-body-2"></div>
     </div>
-
-    <div class="card" style="margin-bottom:16px;">
-      <div class="card-head">
-        <div class="step">5</div>
-        <h2>余っている理由（あてはまるもの全て）</h2>
+    <div class="drug-block" id="drug-block-3" style="display:none;">
+      <div class="drug-block-head">
+        <h3>薬剤③</h3>
+        <button type="button" class="btn-remove" onclick="removeDrug(3)">削除</button>
       </div>
-      <div class="card-body">
-        <div class="choice-group" id="reasonGroup">
-          <div class="choice-item check">
-            <input type="checkbox" name="reason" id="re1" value="飲み忘れが多い">
-            <label for="re1">飲み忘れが多い</label>
-          </div>
-          <div class="choice-item check">
-            <input type="checkbox" name="reason" id="re2" value="副作用・体調不良で飲めなかった">
-            <label for="re2">副作用・体調不良で飲めなかった</label>
-          </div>
-          <div class="choice-item check">
-            <input type="checkbox" name="reason" id="re3" value="症状が落ち着き自己判断で減らした">
-            <label for="re3">症状が落ち着き自己判断で減らした</label>
-          </div>
-          <div class="choice-item check">
-            <input type="checkbox" name="reason" id="re4" value="以前から多めに余っていた">
-            <label for="re4">以前から多めに余っていた</label>
-          </div>
-          <div class="choice-item check">
-            <input type="checkbox" name="reason" id="re5" value="その他">
-            <label for="re5">その他</label>
-          </div>
-        </div>
-        <div class="field" style="margin-top:12px;">
-          <label for="comment">自由コメント<span class="hint">（薬剤師に伝えたいこと）</span></label>
-          <textarea id="comment" name="comment" rows="3"
-            placeholder="任意でご記入ください" maxlength="500"></textarea>
-        </div>
-      </div>
+      <div class="drug-block-body" id="drug-body-3"></div>
     </div>
-
+    <button type="button" class="btn-add" id="addDrugBtn" onclick="addDrug()">＋ 別のお薬も追加する</button>
   </div>
 
   <button type="submit" class="btn-submit" id="submitBtn">送信する</button>
-
 </form>
 
 <div class="status-bar" id="statusBar"></div>
@@ -362,120 +158,207 @@
   <p>ご回答ありがとうございます。<br>薬剤師が内容を確認してお声がけします。<br>そのままお待ちください。</p>
 </div>
 
-<p class="notice">
-  入力いただいた情報は調剤業務の改善のみに使用し、<br>
-  第三者への提供は一切行いません。
-</p>
+<p class="notice">入力いただいた情報は調剤業務の改善のみに使用し、<br>第三者への提供は一切行いません。</p>
 
 <script>
-// ================================================================
-// ★ここだけ設定★
-// ================================================================
-const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyQTbQgioHIlPnTUVIv9yxk2oQnx3heVEXHVj07Fm1UjYj1BeM1VXpfQFEia61Bu9c/exec";
+const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbzX2BesM0yAOXBRa1wXJGN-DWUlZqFDN2QcOqVE3JjofykqfCmhjIriPNSwaZwvEjA/exec";
 const API_TOKEN    = "04cc60d675b4d487eb1fa375f50a6d29d78cd0ccdbb4bd86546ed06b707efe2b";
 
-// 「ある」選択時に詳細ブロックを展開
-document.querySelectorAll('input[name="hasRemainder"]').forEach(radio => {
-  radio.addEventListener("change", () => {
-    const block = document.getElementById("detailBlock");
-    block.classList.toggle("visible", radio.value === "あり" && radio.checked);
+function buildDrugHTML(idx) {
+  const p = "d" + idx;
+  return `
+<div class="drug-section">
+  <div class="field">
+    <label>お薬の名前<span class="hint">（わかる範囲で構いません）</span></label>
+    <input type="text" id="${p}_name" placeholder="例：テリルジー、目薬、塗り薬など" maxlength="200" autocomplete="off">
+  </div>
+</div>
+<div class="drug-section">
+  <label style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px;display:block;">
+    どのくらい余っていますか？<span style="color:var(--amber);font-size:11px;margin-left:4px;">必須</span>
+  </label>
+  <div class="choice-group two-col">
+    <div class="choice-item">
+      <input type="radio" name="${p}_amount" id="${p}_a1" value="1〜6日分">
+      <label for="${p}_a1">1〜6日分</label>
+    </div>
+    <div class="choice-item amber">
+      <input type="radio" name="${p}_amount" id="${p}_a2" value="7〜13日分">
+      <label for="${p}_a2">7〜13日分</label>
+    </div>
+    <div class="choice-item danger">
+      <input type="radio" name="${p}_amount" id="${p}_a3" value="14〜27日分">
+      <label for="${p}_a3">14〜27日分</label>
+    </div>
+    <div class="choice-item danger">
+      <input type="radio" name="${p}_amount" id="${p}_a4" value="28日分以上">
+      <label for="${p}_a4">28日分以上</label>
+    </div>
+    <div class="choice-item purp" style="grid-column:1/-1;">
+      <input type="radio" name="${p}_amount" id="${p}_a5" value="その他（外用など）">
+      <label for="${p}_a5">その他（外用薬・吸入薬・目薬など）</label>
+    </div>
+  </div>
+  <div class="conditional" id="${p}_otherWrap" style="margin-top:10px;">
+    <input type="text" id="${p}_otherAmount" placeholder="例：吸入薬1個、目薬2本など" maxlength="200" autocomplete="off">
+  </div>
+  <div class="conditional" id="${p}_adjustWrap">
+    <div class="adjust-block">
+      <div class="adjust-label">残薬の調整を希望しますか？</div>
+      <div class="choice-group">
+        <div class="choice-item">
+          <input type="radio" name="${p}_adjust" id="${p}_adj1" value="はい、調整をお願いしたい">
+          <label for="${p}_adj1">はい、調整をお願いしたい</label>
+        </div>
+        <div class="choice-item">
+          <input type="radio" name="${p}_adjust" id="${p}_adj2" value="いいえ、予備として手元に置いておきたい">
+          <label for="${p}_adj2">いいえ、予備として手元に置いておきたい</label>
+        </div>
+        <div class="choice-item">
+          <input type="radio" name="${p}_adjust" id="${p}_adj3" value="薬剤師に相談してから決めたい">
+          <label for="${p}_adj3">薬剤師に相談してから決めたい</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="drug-section">
+  <label style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px;display:block;">余っている理由（あてはまるもの全て）</label>
+  <div class="choice-group">
+    <div class="choice-item check"><input type="checkbox" name="${p}_reason" id="${p}_r1" value="飲み忘れが多い"><label for="${p}_r1">飲み忘れが多い</label></div>
+    <div class="choice-item check"><input type="checkbox" name="${p}_reason" id="${p}_r2" value="副作用・体調不良で飲めなかった"><label for="${p}_r2">副作用・体調不良で飲めなかった</label></div>
+    <div class="choice-item check"><input type="checkbox" name="${p}_reason" id="${p}_r3" value="症状が落ち着き自己判断で減らした"><label for="${p}_r3">症状が落ち着き自己判断で減らした</label></div>
+    <div class="choice-item check"><input type="checkbox" name="${p}_reason" id="${p}_r4" value="以前から多めに余っていた"><label for="${p}_r4">以前から多めに余っていた</label></div>
+    <div class="choice-item check"><input type="checkbox" name="${p}_reason" id="${p}_r5" value="その他"><label for="${p}_r5">その他</label></div>
+  </div>
+</div>`;
+}
+
+let drugCount = 1;
+
+function initDrugBlock(idx) {
+  document.getElementById("drug-body-" + idx).innerHTML = buildDrugHTML(idx);
+  const p = "d" + idx;
+  document.querySelectorAll("input[name='" + p + "_amount']").forEach(function(radio) {
+    radio.addEventListener("change", function() {
+      const needs = ["7〜13日分","14〜27日分","28日分以上","その他（外用など）"].includes(this.value);
+      const isOther = this.value === "その他（外用など）";
+      document.getElementById(p + "_adjustWrap").classList.toggle("visible", needs);
+      document.getElementById(p + "_otherWrap").classList.toggle("visible", isOther);
+      if (!needs) document.querySelectorAll("input[name='" + p + "_adjust']").forEach(function(r){r.checked=false;});
+      if (!isOther) { var el=document.getElementById(p+"_otherAmount"); if(el) el.value=""; }
+    });
+  });
+}
+
+function addDrug() {
+  if (drugCount >= 3) return;
+  drugCount++;
+  var block = document.getElementById("drug-block-" + drugCount);
+  block.style.display = "block";
+  initDrugBlock(drugCount);
+  if (drugCount >= 3) document.getElementById("addDrugBtn").disabled = true;
+}
+
+function removeDrug(idx) {
+  document.getElementById("drug-block-" + idx).style.display = "none";
+  document.getElementById("drug-body-" + idx).innerHTML = "";
+  if (idx === drugCount) drugCount--;
+  document.getElementById("addDrugBtn").disabled = false;
+}
+
+initDrugBlock(1);
+
+document.querySelectorAll("input[name='hasRemainder']").forEach(function(r) {
+  r.addEventListener("change", function() {
+    document.getElementById("drugsWrapper").classList.toggle("visible", this.value === "あり");
   });
 });
 
-// 「その他」選択時に残量入力欄を展開
-document.querySelectorAll('input[name="amount"]').forEach(radio => {
-  radio.addEventListener("change", () => {
-    const block = document.getElementById("otherAmountBlock");
-    block.classList.toggle("visible", radio.value === "その他（外用など）" && radio.checked);
-  });
-});
+function sanitize(str) {
+  if (!str) return "";
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#x27;").trim().slice(0,300);
+}
 
-// バリデーション
 function validate() {
-  const errors = [];
-  const ticket = document.getElementById("ticketNo");
+  var errors = [];
+  var ticket = document.getElementById("ticketNo");
   ticket.classList.remove("error");
-  const tVal = parseInt(ticket.value, 10);
+  var tVal = parseInt(ticket.value, 10);
   if (!ticket.value || isNaN(tVal) || tVal < 1 || tVal > 9999) {
     ticket.classList.add("error");
     errors.push("引換券番号を正しく入力してください（1〜9999）");
   }
-  const hasRem = document.querySelector('input[name="hasRemainder"]:checked');
-  if (!hasRem) {
-    errors.push("「余っているお薬はありますか？」を選択してください");
-  }
+  var hasRem = document.querySelector("input[name='hasRemainder']:checked");
+  if (!hasRem) errors.push("「余っているお薬はありますか？」を選択してください");
   if (hasRem && hasRem.value === "あり") {
-    if (!document.querySelector('input[name="amount"]:checked')) {
-      errors.push("残薬の量（STEP4）を選択してください");
-    }
+    if (!document.querySelector("input[name='d1_amount']:checked"))
+      errors.push("薬剤①の残薬量を選択してください");
   }
-  return { ok: errors.length === 0, errors };
+  return { ok: errors.length === 0, errors: errors };
 }
 
-// サニタイズ
-function sanitize(str) {
-  if (!str) return "";
-  return String(str)
-    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;").replace(/'/g,"&#x27;")
-    .trim().slice(0, 500);
+function collectDrug(idx) {
+  var block = document.getElementById("drug-block-" + idx);
+  if (!block || block.style.display === "none") return null;
+  var body = document.getElementById("drug-body-" + idx);
+  if (!body || !body.innerHTML) return null;
+  var p = "d" + idx;
+  var amount = document.querySelector("input[name='" + p + "_amount']:checked");
+  if (!amount) return null;
+  var reasons = [];
+  document.querySelectorAll("input[name='" + p + "_reason']:checked").forEach(function(cb){ reasons.push(sanitize(cb.value)); });
+  var adjEl = document.querySelector("input[name='" + p + "_adjust']:checked");
+  return {
+    name: sanitize((document.getElementById(p+"_name")||{}).value||""),
+    amount: sanitize(amount.value),
+    otherAmount: sanitize((document.getElementById(p+"_otherAmount")||{}).value||""),
+    adjust: sanitize(adjEl ? adjEl.value : ""),
+    reason: reasons.join("・")
+  };
 }
 
-// 送信処理
-document.getElementById("mainForm").addEventListener("submit", async (e) => {
+document.getElementById("mainForm").addEventListener("submit", async function(e) {
   e.preventDefault();
-  const { ok, errors } = validate();
-  const statusBar = document.getElementById("statusBar");
+  var result = validate();
+  var statusBar = document.getElementById("statusBar");
   statusBar.className = "status-bar";
-
-  if (!ok) {
+  if (!result.ok) {
     statusBar.className = "status-bar error";
-    statusBar.textContent = "⚠ " + errors[0];
+    statusBar.textContent = "⚠ " + result.errors[0];
     return;
   }
-
-  const btn = document.getElementById("submitBtn");
+  var btn = document.getElementById("submitBtn");
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>送信中...';
   statusBar.className = "status-bar loading";
   statusBar.textContent = "送信しています...";
 
-  const reasons = [...document.querySelectorAll('input[name="reason"]:checked')]
-    .map(cb => sanitize(cb.value)).join("・");
-
-  const payload = {
-    token:        API_TOKEN,
-    ticketNo:     sanitize(document.getElementById("ticketNo").value),
-    hasRemainder: sanitize(document.querySelector('input[name="hasRemainder"]:checked')?.value || ""),
-    drugName:     sanitize(document.getElementById("drugName").value),
-    amount:       sanitize(document.querySelector('input[name="amount"]:checked')?.value || ""),
-    otherAmount:  sanitize(document.getElementById("otherAmount").value),
-    reason:       reasons,
-    comment:      sanitize(document.getElementById("comment").value),
-    submittedAt:  new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" }),
+  var drugs = [1,2,3].map(collectDrug).filter(Boolean);
+  var payload = {
+    token: API_TOKEN,
+    ticketNo: sanitize(document.getElementById("ticketNo").value),
+    hasRemainder: sanitize((document.querySelector("input[name='hasRemainder']:checked")||{}).value||""),
+    drugs: drugs,
+    submittedAt: new Date().toLocaleString("ja-JP",{timeZone:"Asia/Tokyo"})
   };
 
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 30000);
-
+  var controller = new AbortController();
+  var timeoutId = setTimeout(function(){ controller.abort(); }, 30000);
   try {
-    // ★no-cors + text/plain でCORS問題を回避★
     await fetch(GAS_ENDPOINT, {
-      method:  "POST",
-      mode:    "no-cors",
-      headers: { "Content-Type": "text/plain" },
-      body:    JSON.stringify(payload),
-      signal:  controller.signal,
+      method:"POST", mode:"no-cors",
+      headers:{"Content-Type":"text/plain"},
+      body:JSON.stringify(payload),
+      signal:controller.signal
     });
     clearTimeout(timeoutId);
-
-    // no-corsはレスポンスを読めないので送信完了とみなす
     document.getElementById("mainForm").style.display = "none";
     statusBar.className = "status-bar";
     document.getElementById("doneScreen").style.display = "block";
     document.querySelector(".notice").style.display = "none";
-
-  } catch (err) {
+  } catch(err) {
     clearTimeout(timeoutId);
     btn.disabled = false;
     btn.textContent = "送信する";
@@ -486,6 +369,5 @@ document.getElementById("mainForm").addEventListener("submit", async (e) => {
   }
 });
 </script>
-
 </body>
 </html>
